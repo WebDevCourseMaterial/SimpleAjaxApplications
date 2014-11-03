@@ -6,6 +6,16 @@ rh.mq.QuizStatsController = function(questionsPerRound) {
   this.updateDisplays();
 };
 
+rh.mq.QuizStatsController.prototype.resetStats = function() {
+  this.correctThisRound = 0;
+  this.totalCorrect = 0;
+  this.totalIncorrect = 0;
+  localStorage.totalCorrect = this.totalCorrect; 
+  localStorage.totalIncorrect = this.totalIncorrect;
+  $("#percentage-correct").text(100);
+  this.updateDisplays();
+};
+
 rh.mq.QuizStatsController.prototype.questionAnswered = function(wasCorrect) {
   if (wasCorrect) {
     this.totalCorrect++;
@@ -25,7 +35,7 @@ rh.mq.QuizStatsController.prototype.updateDisplays = function() {
   var total = this.totalCorrect + this.totalIncorrect;
   if (total > 0) {
     var percentage = this.totalCorrect / total * 100;
-    $("#percentage-right").text(percentage.toFixed(1));
+    $("#percentage-correct").text(percentage.toFixed(1));
   }
   
 };
