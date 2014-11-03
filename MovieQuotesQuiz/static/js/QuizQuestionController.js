@@ -2,6 +2,12 @@ rh.mq.QuizQuestionController = function(questionArray, $container, callback) {
   this.$container = $container;
   this.callback = callback;
   this.displayNewQuestions(questionArray);
+  
+  this.correctAudioElement = document.createElement('audio');
+  this.correctAudioElement.setAttribute('src', '/static/audio/243701__ertfelda__correct.wav');
+ 
+  this.incorrectAudioElement = document.createElement('audio');
+  this.incorrectAudioElement.setAttribute('src', '/static/audio/142608__autistic-lucario__error.wav');
 };
 
 rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionArray) {
@@ -20,7 +26,6 @@ rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionAr
     var questionNumber = Math.floor(inputIndex / 4);
     var answerIndex = inputIndex % 4;
     quizQuestionController.handleAnswer(questionNumber, answerIndex, this);
-    
   });
 };
 
@@ -41,10 +46,14 @@ rh.mq.QuizQuestionController.prototype.createNewQuestion = function(questionNumb
   return $question
 };
 
+
 rh.mq.QuizQuestionController.prototype.handleAnswer = function(questionNumber, answerIndex, inputElement) {
   var questionData = this.questionArray[questionNumber];
-  if (answerIndex != questionData["correctIndex"]) {
+  if (answerIndex == questionData["correctIndex"]) {
+    this.correctAudioElement.play();
+  } else {
     $(inputElement).parents(".radio").addClass("bg-danger");
+    this.incorrectAudioElement.play();
   }
   var $question = $(inputElement).parents(".question");
   $question.find("input").prop("disabled", true );  

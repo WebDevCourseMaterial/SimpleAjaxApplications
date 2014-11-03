@@ -42,7 +42,7 @@
 	        </li>
           <li><button id="new-questions" type="button" class="btn btn-default navbar-btn btn-sm btn-primary">New Questions</button></li>
           <li><a id="average" href="#"></a></li>
-          <p class="navbar-text">Average: 100%</p>
+          <p class="navbar-text">Average: <span id="percentage-right">100</span>%</p>
           <li><button id="reset-stats" type="button" class="btn btn-default navbar-btn btn-sm btn-danger">Reset stats</button></li>
         </ul>
       </div>
@@ -64,13 +64,13 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">Total incorrect</h3>
 				</div>
-				<div class="panel-body text-center">0</div>
+				<div id="total-incorrect" class="panel-body text-center">0</div>
 			</div>
 			<div class="panel panel-success pull-right ">
 				<div class="panel-heading">
 					<h3 class="panel-title">Total correct</h3>
 				</div>
-				<div class="panel-body text-center">0</div>
+				<div id="total-correct" class="panel-body text-center">0</div>
 			</div>
 		</div>
 		<div id="question-container">
