@@ -9,14 +9,18 @@ rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionAr
 
   var $questionContent = $("<div></div>")
   for (var i = 0; i < questionArray.length; ++i) {
-    var $question = this.createNewQuestionForData(i);
+    var $question = this.createNewQuestion(i);
     $question.appendTo($questionContent);
   }
   $("#question-container").html($questionContent);
   
   var quizQuestionController = this;
-  $(".final-answer").click( function() {
-    quizQuestionController.handleAnswer($(".final-answer").index(this));
+  $("input").click( function() {
+    var inputIndex = $("input").index(this);
+    var questionNumber = Math.floor(inputIndex / 4);
+    var answerIndex = inputIndex % 4;
+    quizQuestionController.handleAnswer(questionNumber, answerIndex, this);
+    
   });
 };
 
@@ -37,11 +41,13 @@ rh.mq.QuizQuestionController.prototype.createNewQuestion = function(questionNumb
   return $question
 };
 
-rh.mq.QuizQuestionController.prototype.handleAnswer = function(questionNumber) {
-  console.log("Attempt to answer question " + questionNumber);
+rh.mq.QuizQuestionController.prototype.handleAnswer = function(questionNumber, answerIndex, inputElement) {
   var questionData = this.questionArray[questionNumber];
-  console.log("Correct answer is " + questionData["correctIndex"]);
-  console.log("Your answer is ???");
-  
-  
+  if (answerIndex != questionData["correctIndex"]) {
+    $(inputElement).parents(".radio").addClass("bg-danger");
+  }
+  var $question = $(inputElement).parents(".question");
+  $question.find("input").prop("disabled", true );  
+  $question.find(".radio:nth-child(" + (questionData["correctIndex"] + 1) + ")").addClass("bg-success");
+  this.callback(answerIndex == questionData["correctIndex"]);
 };
