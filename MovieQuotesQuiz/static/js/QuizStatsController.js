@@ -1,0 +1,3 @@
+rh.mq.QuizStatsController = function() {
+  
+};

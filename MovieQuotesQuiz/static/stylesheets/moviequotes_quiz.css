@@ -1,0 +1,23 @@
+body {
+  padding-top: 70px;
+}
+
+.panel-body {
+	padding: 5px;
+}
+
+.statsrow > div {
+	margin: 0 10px;
+}
+
+.well {
+	margin: 10px;
+}
+
+.glyphicon-ok {
+	display: none;
+}
+
+.active .glyphicon-ok {
+	display: inline;
+}
