@@ -49,10 +49,10 @@
       <!--/.nav-collapse -->
     </div>
   </div>
-
 	<div class="container">
-		<div class="row statsrow">
-			<div class="panel panel-primary pull-left hidden-xs">
+		<div class="col-xs-4 col-sm-3 col-md-2 sidebar">
+		
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Round Score</h3>
 				</div>
@@ -60,30 +60,32 @@
 					<span>0</span>/<span>0</span>
 				</div>
 			</div>
-			<div class="panel panel-danger pull-right">
+			<div class="panel panel-danger">
 				<div class="panel-heading">
 					<h3 class="panel-title">Total incorrect</h3>
 				</div>
 				<div id="total-incorrect" class="panel-body text-center">0</div>
 			</div>
-			<div class="panel panel-success pull-right ">
+			<div class="panel panel-success">
 				<div class="panel-heading">
 					<h3 class="panel-title">Total correct</h3>
 				</div>
 				<div id="total-correct" class="panel-body text-center">0</div>
 			</div>
-		</div>
-		<div id="question-container">
+		
+        </div>
+	
+		<div id="question-container" class="col-xs-8 col-xs-offset-4 col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 		</div>
 		<div id="question-template" class="question hidden">
 			<div class="row">
-				<div class="col-sm-offset-1 col-sm-10">
+				<div>
 					<h2 class="quote"></h2>
 					What movie is that quote from?
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-offset-2 col-sm-8">
+				<div class="col-sm-offset-1 col-sm-8">
 					<div class="radio">
 						<label> <input type="radio" value="0">
 						</label>
