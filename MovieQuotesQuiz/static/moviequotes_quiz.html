@@ -34,9 +34,9 @@
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questions per round<span class="caret"></span></a>
 	          <ul class="dropdown-menu" role="menu">
 	            <li><a href="#">1<span class='pull-right glyphicon glyphicon-ok'></a></li>
-	            <li><a class="active" href="#">3<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a href="#">3<span class='pull-right glyphicon glyphicon-ok'></a></li>
 	            <li><a href="#">5<span class='pull-right glyphicon glyphicon-ok'></a></li>
-	            <li><a href="#">10<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a class="active" href="#">10<span class='pull-right glyphicon glyphicon-ok'></a></li>
 	            <li><a href="#">20<span class='pull-right glyphicon glyphicon-ok'></a></li>
 	          </ul>
 	        </li>
@@ -57,20 +57,20 @@
 					<h3 class="panel-title">Round Score</h3>
 				</div>
 				<div class="panel-body text-center">
-					<span>0</span>/<span>0</span>
+					<span id="correct-this-round">0</span>/<span id="questions-per-round">10</span>
 				</div>
-			</div>
-			<div class="panel panel-danger">
-				<div class="panel-heading">
-					<h3 class="panel-title">Total incorrect</h3>
-				</div>
-				<div id="total-incorrect" class="panel-body text-center">0</div>
 			</div>
 			<div class="panel panel-success">
 				<div class="panel-heading">
 					<h3 class="panel-title">Total correct</h3>
 				</div>
 				<div id="total-correct" class="panel-body text-center">0</div>
+			</div>
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title">Total incorrect</h3>
+				</div>
+				<div id="total-incorrect" class="panel-body text-center">0</div>
 			</div>
 		
         </div>

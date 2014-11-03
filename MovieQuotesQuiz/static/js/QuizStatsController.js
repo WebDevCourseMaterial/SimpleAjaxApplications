@@ -1,16 +1,17 @@
-rh.mq.QuizStatsController = function() {
-  this.totalCorrect = localStorage.totalCorrect || 0
-  this.totalIncorrect = localStorage.totalIncorrect || 0;
+rh.mq.QuizStatsController = function(questionsPerRound) {
+  $("#questions-per-round").text(questionsPerRound);
+  this.correctThisRound = 0;
+  this.totalCorrect = parseInt(localStorage.totalCorrect || 0);
+  this.totalIncorrect = parseInt(localStorage.totalIncorrect || 0);
   this.updateDisplays();
 };
 
 rh.mq.QuizStatsController.prototype.questionAnswered = function(wasCorrect) {
   if (wasCorrect) {
-    console.log("You just got something RIGHT!");
     this.totalCorrect++;
+    this.correctThisRound++;
     localStorage.totalCorrect = this.totalCorrect; 
   } else {
-    console.log("You just got something Wrong!");
     this.totalIncorrect++;
     localStorage.totalIncorrect = this.totalIncorrect;
   }
@@ -18,6 +19,7 @@ rh.mq.QuizStatsController.prototype.questionAnswered = function(wasCorrect) {
 };
 
 rh.mq.QuizStatsController.prototype.updateDisplays = function() {
+  $("#correct-this-round").text(this.correctThisRound);
   $("#total-correct").text(this.totalCorrect);
   $("#total-incorrect").text(this.totalIncorrect);
   var total = this.totalCorrect + this.totalIncorrect;
