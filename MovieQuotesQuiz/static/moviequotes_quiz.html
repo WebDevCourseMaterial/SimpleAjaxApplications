@@ -24,11 +24,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">MovieQuotes</a>
+        <a class="navbar-brand" href="/">MovieQuotes</a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-left">
-          <li><a data-toggle="modal" data-target="#ajax-quote-modal" href="#">Add Quote</a></li>
+          <li><a id="show-add-modal" data-toggle="modal" data-target="#ajax-quote-modal" href="#">Add Quote</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 	        <li class="dropdown">
@@ -117,8 +117,7 @@
 							aria-hidden="true">&times;</button>
 						<h4 class="modal-title">Add a MovieQuote</h4>
 					</div>
-					<div class="form-horizontal"
-						role="form">
+					<div class="form-horizontal" role="form">
 						<input name="entity_key" type="text" class="hidden">
 						<div class="modal-body">
 							<div class="form-group">

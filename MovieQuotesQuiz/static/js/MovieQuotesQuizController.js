@@ -45,11 +45,13 @@ rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
   });
 };
 
+
 rh.mq.MovieQuotesQuizController.prototype.attachEventHandlers = function() {
   $('#ajax-quote-modal').on('shown.bs.modal', function() {
-    $("input[name='quote']").focus();
+    $("input[name=quote]").focus();
   });
 };
+
 
 rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
   var movieQuotesQuizController = this;
@@ -69,7 +71,27 @@ rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
     movieQuotesQuizController.fetchQuestions();
   });
   
+  $("#show-add-modal").click(function() {
+
+    $("#movie-input").val("");
+    $("#quote-input").val("");
+  });
+  
   $("#add-quote-button").click(function() {
-    console.log("YOU clicked on add quote");
+    var movie = $("#movie-input").val();
+    var quote = $("#quote-input").val();
+    var moviequote = {"quote": quote, "movie": movie, "api": "json"};
+    console.log("YOU clicked on add quote with " + JSON.stringify(moviequote));
+    
+ // Send the data using post
+    $.post( "/insertquote", moviequote )
+    .done(function( data ) {
+      console.log("Successfully added " + JSON.stringify(data));
+    })
+    .fail(function(jqxhr, textStatus, error) {
+      var err = textStatus + ", " + error;
+      console.log("POST Request Failed: " + err);
+    });
+    
   });
 };

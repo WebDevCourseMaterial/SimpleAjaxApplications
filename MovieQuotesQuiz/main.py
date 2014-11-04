@@ -52,7 +52,12 @@ class InsertQuoteAction(webapp2.RequestHandler):
                                    quote=self.request.get("quote"),
                                    movie=self.request.get("movie"))
             new_quote.put()
-        self.redirect(self.request.referer)
+        if self.request.get("api") == "json":
+          self.response.headers['Content-Type'] = 'application/json'
+          response = {"quote": new_quote.quote, "movie": new_quote.movie}
+          self.response.out.write(json.dumps(response))
+        else:
+          self.redirect(self.request.referer)
 
 class DeleteQuoteAction(webapp2.RequestHandler):
     def post(self):
@@ -86,6 +91,7 @@ class GetQuizQuestions(webapp2.RequestHandler):
         response = {'questions': question_list}
         self.response.out.write(json.dumps(response))
 
+        
 app = webapp2.WSGIApplication([
     ("/", MovieQuotesPage),
     ("/insertquote", InsertQuoteAction),
