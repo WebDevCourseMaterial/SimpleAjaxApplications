@@ -10,6 +10,30 @@ rh.mq.MovieQuotesQuizController = function() {
     // TODO: Update the appropriate class in the dropdown.
   }
   
+
+
+  var movieQuotesQuizController = this;
+  
+//  $.get("/quizquestions?questions=5", function(data, status) {
+//    console.log("Data: " + data.questions + "\nStatus: " + status);
+//  });
+
+  $.getJSON("/quizquestions", {questions : "3"})
+      .done(function(json) {
+        console.log("JSON Data: " + JSON.stringify(json));
+        
+        movieQuotesQuizController.quizQuestionController = new rh.mq.QuizQuestionController(json["questions"], $("#question-container"), function(wasCorrect) {
+          movieQuotesQuizController.quizStatController.questionAnswered(wasCorrect);
+        });
+        
+        
+      })
+      .fail(function(jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        console.log("Request Failed: " + err);
+      });
+  
+  
   // TODO: Get questions from the server!
   var data = {"questions": [{"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
                             {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
@@ -27,10 +51,7 @@ rh.mq.MovieQuotesQuizController = function() {
                             {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
                             {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]}]}
   
-  var movieQuotesQuizController = this;
-  this.quizQuestionController = new rh.mq.QuizQuestionController(data["questions"], $("#question-container"), function(wasCorrect) {
-    movieQuotesQuizController.quizStatController.questionAnswered(wasCorrect);
-  });
+  
   
   $(".dropdown-menu a").click(function() {
     console.log("You clicked " + $(this).text());

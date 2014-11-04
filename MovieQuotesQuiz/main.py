@@ -14,13 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import json
 import logging
 import os
+import random
 
 from google.appengine.ext import ndb
 import jinja2
-from models import MovieQuote
 import webapp2
+
+from models import MovieQuote
 
 
 jinja_env = jinja2.Environment(
@@ -57,10 +60,37 @@ class DeleteQuoteAction(webapp2.RequestHandler):
         moviequote_key.delete()
         self.redirect(self.request.referer)
 
+
+class GetQuizQuestions(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
+        #self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        
+        moviequotes = MovieQuote.query(ancestor=PARENT_KEY).order(-MovieQuote.last_touch_date_time).fetch(100)
+        unique_movie_titles = []
+        for moviequote in moviequotes:
+            if moviequote.movie not in unique_movie_titles:
+                unique_movie_titles.append(moviequote.movie)
+        num_questions = int(self.request.get("questions"))
+        random_moviequotes = random.sample(moviequotes, num_questions)
+        question_list = []
+        for moviequote in random_moviequotes:
+            incorrects = random.sample(unique_movie_titles, 4)
+            if moviequote.movie in incorrects:
+                incorrects.remove(moviequote.movie)
+            else:
+                incorrects = incorrects[:3]
+            question_list.append({"quote": moviequote.quote,
+                                  "movie": moviequote.movie,
+                                  "incorrects": incorrects})
+        response = {'questions': question_list}
+        self.response.out.write(json.dumps(response))
+
 app = webapp2.WSGIApplication([
     ("/", MovieQuotesPage),
     ("/insertquote", InsertQuoteAction),
-    ("/deletequote", DeleteQuoteAction)
+    ("/deletequote", DeleteQuoteAction),
+    ("/quizquestions", GetQuizQuestions)
 ], debug=True)
 
 
