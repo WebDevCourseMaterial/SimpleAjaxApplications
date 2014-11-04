@@ -4,21 +4,23 @@ rh.mq.QuizStatsController = function(questionsPerRound) {
   this.newRound();
 };
 
+
 rh.mq.QuizStatsController.prototype.newRound = function(questionsPerRound) {
   $("#questions-per-round").text(questionsPerRound);
   this.correctThisRound = 0;
   this.updateDisplays();
 };
 
+
 rh.mq.QuizStatsController.prototype.resetStats = function() {
-  this.correctThisRound = 0;
   this.totalCorrect = 0;
   this.totalIncorrect = 0;
   localStorage.totalCorrect = this.totalCorrect; 
   localStorage.totalIncorrect = this.totalIncorrect;
   $("#percentage-correct").text(100);
-  this.updateDisplays();
+  this.newRound();
 };
+
 
 rh.mq.QuizStatsController.prototype.questionAnswered = function(wasCorrect) {
   if (wasCorrect) {
@@ -32,6 +34,7 @@ rh.mq.QuizStatsController.prototype.questionAnswered = function(wasCorrect) {
   this.updateDisplays();
 };
 
+
 rh.mq.QuizStatsController.prototype.updateDisplays = function() {
   $("#correct-this-round").text(this.correctThisRound);
   $("#total-correct").text(this.totalCorrect);
@@ -41,5 +44,4 @@ rh.mq.QuizStatsController.prototype.updateDisplays = function() {
     var percentage = this.totalCorrect / total * 100;
     $("#percentage-correct").text(percentage.toFixed(1));
   }
-  
 };

@@ -5,15 +5,14 @@ rh.mq.MovieQuotesQuizController = function() {
     movieQuotesQuizController.quizStatController.questionAnswered(wasCorrect);
   });
   
+  var htmlDefaultQuestionPerRound = parseInt($(".dropdown-menu a.active").text());
   var questionPerRound = localStorage.questionPerRound;
   if (!questionPerRound) {
-    console.log("Nothing in localStorage.questionPerRound setting to 10");
-    questionPerRound = 10;
-    localStorage.questionPerRound = 10;
+    console.log("Nothing in localStorage.questionPerRound setting to " + htmlDefaultQuestionPerRound);
+    questionPerRound = htmlDefaultQuestionPerRound;
+    localStorage.questionPerRound = htmlDefaultQuestionPerRound;
   }
-  console.log("questionPerRound = " + questionPerRound);
-  if (questionPerRound != 10) {
-    console.log("Default was not 10 active to " + questionPerRound);
+  if (questionPerRound != htmlDefaultQuestionPerRound) {
     questionPerRound = parseInt(questionPerRound);
     $(".dropdown-menu a").removeClass("active");
     $(".dropdown-menu a").each( function(index, element) {
@@ -24,8 +23,8 @@ rh.mq.MovieQuotesQuizController = function() {
   }
   this.fetchQuestions();
   this.enableButtons();
+  this.attachEventHandlers();
 };
-
 
 
 rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
@@ -33,10 +32,7 @@ rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
   // console.log("Data: " + data.questions + "\nStatus: " + status);
   // });
   var movieQuotesQuizController = this;
-
   var questionPerRound = parseInt($(".dropdown-menu a.active").text());
-  console.log("questionPerRound = " + questionPerRound);
-  
   
   $.getJSON("/quizquestions", {"questions": questionPerRound})
   .done(function(json) {
@@ -46,6 +42,12 @@ rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
   }).fail(function(jqxhr, textStatus, error) {
     var err = textStatus + ", " + error;
     console.log("Request Failed: " + err);
+  });
+};
+
+rh.mq.MovieQuotesQuizController.prototype.attachEventHandlers = function() {
+  $('#ajax-quote-modal').on('shown.bs.modal', function() {
+    $("input[name='quote']").focus();
   });
 };
 
@@ -65,5 +67,9 @@ rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
 
   $("#new-questions").click(function() {
     movieQuotesQuizController.fetchQuestions();
-  });  
-}
+  });
+  
+  $("#add-quote-button").click(function() {
+    console.log("YOU clicked on add quote");
+  });
+};

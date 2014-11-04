@@ -6,13 +6,13 @@ rh.mq.QuizQuestionController = function(questionArray, $container, callback) {
     this.displayNewQuestions(questionArray);
   }
   
-  
   this.correctAudioElement = document.createElement('audio');
   this.correctAudioElement.setAttribute('src', '/static/audio/243701__ertfelda__correct.wav');
  
   this.incorrectAudioElement = document.createElement('audio');
   this.incorrectAudioElement.setAttribute('src', '/static/audio/142608__autistic-lucario__error.wav');
 };
+
 
 rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionArray) {
   this.questionArray = questionArray;
@@ -25,7 +25,7 @@ rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionAr
   $("#question-container").html($questionContent);
   
   var quizQuestionController = this;
-  $("input").click( function() {
+  $("input[type=radio]").click( function() {
     var inputIndex = $("input").index(this);
     var questionNumber = Math.floor(inputIndex / 4);
     var answerIndex = inputIndex % 4;
