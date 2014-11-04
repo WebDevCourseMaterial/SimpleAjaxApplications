@@ -1,8 +1,12 @@
 rh.mq.QuizStatsController = function(questionsPerRound) {
-  $("#questions-per-round").text(questionsPerRound);
-  this.correctThisRound = 0;
   this.totalCorrect = parseInt(localStorage.totalCorrect || 0);
   this.totalIncorrect = parseInt(localStorage.totalIncorrect || 0);
+  this.newRound();
+};
+
+rh.mq.QuizStatsController.prototype.newRound = function(questionsPerRound) {
+  $("#questions-per-round").text(questionsPerRound);
+  this.correctThisRound = 0;
   this.updateDisplays();
 };
 

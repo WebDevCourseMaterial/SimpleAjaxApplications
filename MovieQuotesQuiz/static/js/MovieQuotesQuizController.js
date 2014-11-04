@@ -1,70 +1,69 @@
 rh.mq.MovieQuotesQuizController = function() {
+  var movieQuotesQuizController = this;
   this.quizStatController = new rh.mq.QuizStatsController();
+  this.quizQuestionController = new rh.mq.QuizQuestionController([], $("#question-container"), function(wasCorrect) {
+    movieQuotesQuizController.quizStatController.questionAnswered(wasCorrect);
+  });
   
   var questionPerRound = localStorage.questionPerRound;
-  if (questionPerRound) {
+  if (!questionPerRound) {
+    console.log("Nothing in localStorage.questionPerRound setting to 10");
     questionPerRound = 10;
     localStorage.questionPerRound = 10;
   }
+  console.log("questionPerRound = " + questionPerRound);
   if (questionPerRound != 10) {
-    // TODO: Update the appropriate class in the dropdown.
+    console.log("Default was not 10 active to " + questionPerRound);
+    questionPerRound = parseInt(questionPerRound);
+    $(".dropdown-menu a").removeClass("active");
+    $(".dropdown-menu a").each( function(index, element) {
+      if (parseInt($(element).text()) == questionPerRound) {
+        $(element).addClass("active");
+      }
+    });
   }
-  
+  this.fetchQuestions();
+  this.enableButtons();
+};
 
 
+
+rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
+  // $.get("/quizquestions?questions=" + questionPerRound, function(data, status) {
+  // console.log("Data: " + data.questions + "\nStatus: " + status);
+  // });
   var movieQuotesQuizController = this;
-  
-//  $.get("/quizquestions?questions=5", function(data, status) {
-//    console.log("Data: " + data.questions + "\nStatus: " + status);
-//  });
 
-  $.getJSON("/quizquestions", {questions : "3"})
-      .done(function(json) {
-        console.log("JSON Data: " + JSON.stringify(json));
-        
-        movieQuotesQuizController.quizQuestionController = new rh.mq.QuizQuestionController(json["questions"], $("#question-container"), function(wasCorrect) {
-          movieQuotesQuizController.quizStatController.questionAnswered(wasCorrect);
-        });
-        
-        
-      })
-      .fail(function(jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-      });
+  var questionPerRound = parseInt($(".dropdown-menu a.active").text());
+  console.log("questionPerRound = " + questionPerRound);
   
   
-  // TODO: Get questions from the server!
-  var data = {"questions": [{"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
-                            {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
-                            {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]},
-                            {"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
-                            {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
-                            {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]},
-                            {"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
-                            {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
-                            {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]},
-                            {"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
-                            {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
-                            {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]},
-                            {"quote": "I'll be back", "movie": "The Terminator", "incorrects": ["Big", "The Matrix", "Eragon"]},
-                            {"quote": "Hello killed father", "movie": "The Princess Bride", "incorrects": ["The Terminator", "Terminator 2", "Terminator 3"]},
-                            {"quote": "Hi I'm Olaf and I love warm hugs", "movie": "Frozen", "incorrects": ["Big Mommas House", "Reservoir dogs", "The Big Lebowski"]}]}
-  
-  
-  
+  $.getJSON("/quizquestions", {"questions": questionPerRound})
+  .done(function(json) {
+    console.log("JSON Data: " + JSON.stringify(json));
+    movieQuotesQuizController.quizQuestionController.displayNewQuestions(json.questions);
+    movieQuotesQuizController.quizStatController.newRound(questionPerRound);
+  }).fail(function(jqxhr, textStatus, error) {
+    var err = textStatus + ", " + error;
+    console.log("Request Failed: " + err);
+  });
+};
+
+rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
+  var movieQuotesQuizController = this;
   $(".dropdown-menu a").click(function() {
-    console.log("You clicked " + $(this).text());
     $(".dropdown-menu a").removeClass("active");
     $(this).addClass("active");
+    movieQuotesQuizController.fetchQuestions();
+    localStorage.questionPerRound = parseInt($(this).text()); 
   });
 
   $("#reset-stats").click(function() {
     movieQuotesQuizController.quizStatController.resetStats();
+    movieQuotesQuizController.fetchQuestions();
   });  
 
   $("#new-questions").click(function() {
-    
-    movieQuotesQuizController.quizStatController.resetStats();
+    movieQuotesQuizController.fetchQuestions();
   });  
 }

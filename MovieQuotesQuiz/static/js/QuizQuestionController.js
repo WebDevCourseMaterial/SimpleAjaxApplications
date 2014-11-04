@@ -1,7 +1,11 @@
 rh.mq.QuizQuestionController = function(questionArray, $container, callback) {
   this.$container = $container;
   this.callback = callback;
-  this.displayNewQuestions(questionArray);
+  
+  if (questionArray.length > 0) {
+    this.displayNewQuestions(questionArray);
+  }
+  
   
   this.correctAudioElement = document.createElement('audio');
   this.correctAudioElement.setAttribute('src', '/static/audio/243701__ertfelda__correct.wav');
