@@ -23,6 +23,7 @@ from google.appengine.ext import ndb
 import jinja2
 import webapp2
 
+import import_data
 from models import MovieQuote
 
 
@@ -96,7 +97,8 @@ app = webapp2.WSGIApplication([
     ("/", MovieQuotesPage),
     ("/insertquote", InsertQuoteAction),
     ("/deletequote", DeleteQuoteAction),
-    ("/quizquestions", GetQuizQuestions)
+    ("/quizquestions", GetQuizQuestions),
+    ("/importdata", import_data.ImportDataAction),
 ], debug=True)
 
 
