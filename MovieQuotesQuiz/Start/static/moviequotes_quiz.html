@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MovieQuotes Quiz</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/moviequotes_quiz.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/static/js/moviequotes_quiz_main.js"></script>
+<script src="/static/js/QuizQuestionController.js"></script>
+<script src="/static/js/QuizStatsController.js"></script>
+<script src="/static/js/MovieQuotesQuizController.js"></script>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">MovieQuotes</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a id="show-add-modal" data-toggle="modal" data-target="#ajax-quote-modal" href="#">Add Quote</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Questions per round<span class="caret"></span></a>
+	          <ul class="dropdown-menu" role="menu">
+	            <li><a href="#">1<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a href="#">3<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a class="active" href="#">5<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a href="#">10<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	            <li><a href="#">20<span class='pull-right glyphicon glyphicon-ok'></a></li>
+	          </ul>
+	        </li>
+          <li><button id="new-questions" type="button" class="btn btn-default navbar-btn btn-sm btn-primary">New Questions</button></li>
+          <li><a id="average" href="#"></a></li>
+          <p class="navbar-text">Average: <span id="percentage-correct">100</span>%</p>
+          <li><button id="reset-stats" type="button" class="btn btn-default navbar-btn btn-sm btn-danger">Reset stats</button></li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+  </div>
+	<div class="container">
+		<div class="col-xs-4 col-sm-3 col-md-2 sidebar">
+		
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">Round Score</h3>
+				</div>
+				<div class="panel-body text-center">
+					<span id="correct-this-round">0</span>/<span id="questions-per-round">10</span>
+				</div>
+			</div>
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">Total correct</h3>
+				</div>
+				<div id="total-correct" class="panel-body text-center">0</div>
+			</div>
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">Total incorrect</h3>
+				</div>
+				<div id="total-incorrect" class="panel-body text-center">0</div>
+			</div>
+		
+        </div>
+	
+		<div id="question-container" class="col-xs-8 col-xs-offset-4 col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		</div>
+		<div id="question-template" class="question hidden">
+			<div class="row">
+				<div>
+					<h2 class="quote"></h2>
+					What movie is that quote from?
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-offset-1 col-sm-8">
+					<div class="radio">
+						<label> <input type="radio" value="0">
+						</label>
+					</div>
+					<div class="radio">
+						<label> <input  type="radio" value="1">
+						</label>
+					</div>
+					<div class="radio">
+						<label> <input type="radio" value="2">
+						</label>
+					</div>
+					<div class="radio">
+						<label> <input type="radio" value="3">
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div id='ajax-quote-modal' class="modal fade" tabindex="-1"
+			role="dialog" aria-labelledby="Insert quote" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Add a MovieQuote</h4>
+					</div>
+					<div class="form-horizontal" role="form">
+						<input name="entity_key" type="text" class="hidden">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="quote-input" class="col-sm-2 control-label">Quote:</label>
+								<div class="col-sm-10">
+									<input id="quote-input" name="quote" type="text"
+										class="form-control" placeholder="Quote">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="movie-input" class="col-sm-2 control-label">Movie:
+								</label>
+								<div class="col-sm-10">
+									<input id="movie-input" name="movie" type="text"
+										class="form-control" placeholder="Title">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							<button id="add-quote-button" type="button" class="btn btn-primary" data-dismiss="modal">Add Quote</button>
+						</div>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+
+
+	</div>
+</body>
+</html>
