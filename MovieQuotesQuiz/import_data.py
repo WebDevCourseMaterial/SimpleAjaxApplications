@@ -143,23 +143,20 @@ class ImportDataAction(webapp2.RequestHandler):
       
 def add_movie_quotes(start_index=0, added=0, skipped=0, total=0):
   ending_index = min(start_index + 10, len(SAMPLE_MOVIE_QUOTES))
-  quotelists_to_add = []
   for moviequoteList in SAMPLE_MOVIE_QUOTES[start_index:ending_index]:
     total += 1
     if MovieQuote.query(MovieQuote.quote == moviequoteList[0], ancestor=main.PARENT_KEY).get():
       skipped += 1
     else:
+      movie = MovieQuote(parent=main.PARENT_KEY,
+                                 quote=moviequoteList[0],
+                                 movie=moviequoteList[1])
+      movie.put()
       added += 1
-      quotelists_to_add.append(moviequoteList)
-  for moviequoteList in quotelists_to_add:
-    movie = MovieQuote(parent=main.PARENT_KEY,
-                               quote=moviequoteList[0],
-                               movie=moviequoteList[1])
-    movie.put()
   if ending_index < len(SAMPLE_MOVIE_QUOTES):
-    logging.info("Added " + str(added) + " movie quotes so far.")
+    logging.info("Progress update - So far " + str(added) + " movie quotes have been added out of the " + str(total) + " records processed.")
     deferred.defer(add_movie_quotes, start_index + 10, added, skipped, total)
   else: 
-    logging.info("Finished adding quotes.  Added = " + str(added) + "  Skipped = " + str(skipped) + "  Total = " + str(total))
+    logging.info("Finished importing movie quotes.  Added: " + str(added) + "  Skipped: " + str(skipped) + "  Total: " + str(total))
         
         
