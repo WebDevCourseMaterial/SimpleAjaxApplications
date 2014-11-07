@@ -138,7 +138,9 @@ SAMPLE_MOVIE_QUOTES = [
 
 class ImportDataAction(webapp2.RequestHandler):
   def get(self):
-    deferred.defer(add_movie_quotes)
+    
+    #TODO: Call add_movie_quotes using a Task Queue
+
     self.redirect("/")
       
 def add_movie_quotes(start_index=0, added=0, skipped=0, total=0):
@@ -155,7 +157,9 @@ def add_movie_quotes(start_index=0, added=0, skipped=0, total=0):
       added += 1
   if ending_index < len(SAMPLE_MOVIE_QUOTES):
     logging.info("Progress update - So far " + str(added) + " movie quotes have been added out of the " + str(total) + " records processed.")
-    deferred.defer(add_movie_quotes, start_index + 10, added, skipped, total)
+    
+    # TODO: Make the next deferred.defer call setting the start_index to start_index + 10
+    
   else: 
     logging.info("Finished importing movie quotes.  Added: " + str(added) + "  Skipped: " + str(skipped) + "  Total: " + str(total))
         

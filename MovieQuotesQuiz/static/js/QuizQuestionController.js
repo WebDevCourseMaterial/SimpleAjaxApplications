@@ -17,7 +17,8 @@ rh.mq.QuizQuestionController = function(questionArray, $container, callback) {
 rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionArray) {
   this.questionArray = questionArray;
 
-  var $questionContent = $("<div></div>")
+  var $questionContent = // TODO: Create a new div
+  
   for (var i = 0; i < questionArray.length; ++i) {
     var $question = this.createNewQuestion(i);
     $question.appendTo($questionContent);
@@ -36,7 +37,10 @@ rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionAr
 
 rh.mq.QuizQuestionController.prototype.createNewQuestion = function(questionNumber) {
   var questionData = this.questionArray[questionNumber];
-  var $question = $('#question-template').clone().attr('id', "question" + questionNumber).removeClass("hidden");
+  
+  // TODO: Create a new question clone.
+  // clone #question-template, set the id to "question" + questionNumber, remove the class hidden
+  
   $question.find(".quote").text(questionData["quote"]);
   var correctIndex = Math.floor(Math.random() * 4);
   $question.find("input").attr("name", "question" + questionNumber).each(function( index, element ) {

@@ -34,11 +34,14 @@ rh.mq.MovieQuotesQuizController.prototype.hideNavbar = function() {
 };
 
 rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
-  // $.get("/quizquestions?questions=" + questionPerRound, function(data, status) {
-  // console.log("Data: " + data.questions + "\nStatus: " + status);
-  // });
   var movieQuotesQuizController = this;
   var questionPerRound = parseInt($(".dropdown-menu a.active").text());
+  
+  // TODO: Get questions using an AJAX GET
+  // When complete perform these actions:
+  //  - displayNewQuestions with the quizQuestionController using the questions array.
+  //  - create a newRound with the quizStatsController
+  //  - scroll the window to the top
   
   $.getJSON("/quizquestions", {"questions": questionPerRound})
   .done(function(json) {
@@ -93,15 +96,8 @@ rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
     var moviequote = {"quote": quote, "movie": movie, "api": "json"};
     console.log("YOU clicked on add quote with " + JSON.stringify(moviequote));
     
- // Send the data using post
-    $.post( "/insertquote", moviequote )
-    .done(function( data ) {
-      console.log("Successfully added " + JSON.stringify(data));
-    })
-    .fail(function(jqxhr, textStatus, error) {
-      var err = textStatus + ", " + error;
-      console.log("POST Request Failed: " + err);
-    });
+    // TODO: Send the data using an AJAX post.
+    // When complete simply log the response nothing more.
     
   });
 };
