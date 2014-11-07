@@ -32,3 +32,11 @@ body {
    border-right: 1px solid #eee;
  }
 
+@media screen and (max-width: 500px) {
+    .panel-heading {
+        padding: 0;
+    }
+    h2 {
+      font-size: 20px;
+    }
+}

@@ -26,6 +26,12 @@ rh.mq.MovieQuotesQuizController = function() {
   this.attachEventHandlers();
 };
 
+rh.mq.MovieQuotesQuizController.prototype.hideNavbar = function() {
+  $navbar = $(".collapse.navbar-collapse");
+  if ($navbar.hasClass("in")) {
+    $navbar.collapse('hide');
+  }
+};
 
 rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
   // $.get("/quizquestions?questions=" + questionPerRound, function(data, status) {
@@ -39,6 +45,7 @@ rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
     console.log("JSON Data: " + JSON.stringify(json));
     movieQuotesQuizController.quizQuestionController.displayNewQuestions(json.questions);
     movieQuotesQuizController.quizStatController.newRound(questionPerRound);
+    $(window).scrollTop(0);
   }).fail(function(jqxhr, textStatus, error) {
     var err = textStatus + ", " + error;
     console.log("Request Failed: " + err);
@@ -59,22 +66,25 @@ rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
     $(".dropdown-menu a").removeClass("active");
     $(this).addClass("active");
     movieQuotesQuizController.fetchQuestions();
-    localStorage.questionPerRound = parseInt($(this).text()); 
+    localStorage.questionPerRound = parseInt($(this).text());
+    movieQuotesQuizController.hideNavbar();
   });
 
   $("#reset-stats").click(function() {
     movieQuotesQuizController.quizStatController.resetStats();
     movieQuotesQuizController.fetchQuestions();
+    movieQuotesQuizController.hideNavbar();
   });  
 
   $("#new-questions").click(function() {
     movieQuotesQuizController.fetchQuestions();
+    movieQuotesQuizController.hideNavbar();
   });
   
   $("#show-add-modal").click(function() {
-
     $("#movie-input").val("");
     $("#quote-input").val("");
+    movieQuotesQuizController.hideNavbar();
   });
   
   $("#add-quote-button").click(function() {
