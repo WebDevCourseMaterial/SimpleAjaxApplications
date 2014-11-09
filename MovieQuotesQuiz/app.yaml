@@ -16,9 +16,7 @@ handlers:
   static_dir: static
 
 # Data import
-- url: /importdata/.*
-  script : main.app
-  login: admin
+# TODO: Protect the /importdata path so only admin users can run the data import.
 
 # TODO: Add special case /quiz.html handler
     
