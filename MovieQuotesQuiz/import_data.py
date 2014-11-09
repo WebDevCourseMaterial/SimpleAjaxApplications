@@ -150,10 +150,10 @@ def add_movie_quotes(start_index=0, added=0, skipped=0, total=0):
     if MovieQuote.query(MovieQuote.quote == moviequoteList[0], ancestor=main.PARENT_KEY).get():
       skipped += 1
     else:
-      movie = MovieQuote(parent=main.PARENT_KEY,
-                                 quote=moviequoteList[0],
-                                 movie=moviequoteList[1])
-      movie.put()
+      moviequote = MovieQuote(parent=main.PARENT_KEY,
+                              quote=moviequoteList[0],
+                              movie=moviequoteList[1])
+      moviequote.put()
       added += 1
   if ending_index < len(SAMPLE_MOVIE_QUOTES):
     logging.info("Progress update - So far " + str(added) + " movie quotes have been added out of the " + str(total) + " records processed.")

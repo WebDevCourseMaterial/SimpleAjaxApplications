@@ -81,6 +81,7 @@ def build_question_list(num_questions):
         question_list.append({"quote": moviequote.quote,
                               "movie": moviequote.movie,
                               "incorrects": incorrects})
+    return question_list
             
 class GetQuizQuestions(webapp2.RequestHandler):
     def get(self):
