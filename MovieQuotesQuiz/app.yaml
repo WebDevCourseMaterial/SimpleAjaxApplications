@@ -1,11 +1,10 @@
-application: fisherds-movie-quotes
+application: yourusername-movie-quotes # TODO: Fix username
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: yes
 
-builtins:
-- deferred: on
+# TODO: Add builtin for deferred library to make a Task Queue
 
 handlers:
 - url: /favicon\.ico
@@ -21,9 +20,7 @@ handlers:
   script : main.app
   login: admin
 
-- url: /quiz\.html
-  static_files: static/moviequotes_quiz.html
-  upload: static/moviequotes_quiz.html
+# TODO: Add special case /quiz.html handler
     
 # Use the get and post handlers for everything else
 - url: .*
