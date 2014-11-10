@@ -17,7 +17,7 @@ rh.mq.QuizQuestionController = function(questionArray, $container, callback) {
 rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionArray) {
   this.questionArray = questionArray;
 
-  var $questionContent = // TODO: Create a new div
+  var $questionContent = undefined; // TODO: Create a new div
   
   for (var i = 0; i < questionArray.length; ++i) {
     var $question = this.createNewQuestion(i);
