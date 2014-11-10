@@ -38,7 +38,8 @@ rh.mq.QuizQuestionController.prototype.displayNewQuestions = function(questionAr
 rh.mq.QuizQuestionController.prototype.createNewQuestion = function(questionNumber) {
   var questionData = this.questionArray[questionNumber];
   
-  // TODO: Create a new question clone.
+  
+  var $question = undefined; // TODO: Create a new question clone.
   // clone #question-template, set the id to "question" + questionNumber, remove the class hidden
   
   $question.find(".quote").text(questionData["quote"]);
