@@ -82,8 +82,6 @@ rh.mq.MovieQuotesQuizController.prototype.enableButtons = function() {
   $("#add-quote-button").click(function() {
     var movie = $("#movie-input").val();
     var quote = $("#quote-input").val();
-    var moviequote = {"quote": quote, "movie": movie, "api": "json"};
-    console.log("You clicked on add quote with " + JSON.stringify(moviequote));
     
     // TODO: Send the data using an AJAX post.
     // When complete simply log the response nothing more.
