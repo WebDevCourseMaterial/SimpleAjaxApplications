@@ -35,12 +35,12 @@ rh.mq.MovieQuotesQuizController.prototype.hideNavbar = function() {
 
 rh.mq.MovieQuotesQuizController.prototype.fetchQuestions = function() {
   var movieQuotesQuizController = this;
-  var questionPerRound = parseInt($(".dropdown-menu a.active").text());
+  var questionsPerRound = parseInt($(".dropdown-menu a.active").text());
   
   // TODO: Get questions using an AJAX GET
   // When complete perform these actions:
   //  - displayNewQuestions with the quizQuestionController using the questions array.
-  //  - create a newRound with the quizStatsController
+  //  - create a newRound with the quizStatsController passing in the questionsPerRound
   //  - scroll the window to the top
 };
 
