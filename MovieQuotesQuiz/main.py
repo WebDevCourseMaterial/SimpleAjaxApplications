@@ -56,7 +56,7 @@ class InsertQuoteAction(webapp2.RequestHandler):
             
         # TODO: Use json response instead if api=json
         
-        self.redirect(self.request.referer) # Only do this is NOT using AJAX!
+        self.redirect(self.request.referer) # Only do this if NOT using AJAX!
 
 class DeleteQuoteAction(webapp2.RequestHandler):
     def post(self):
