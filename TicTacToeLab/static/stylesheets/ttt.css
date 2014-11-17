@@ -1,0 +1,17 @@
+body {
+  background: rgb(182, 142, 114);
+}
+
+.win {
+  background: #8BB68B;
+}
+
+.loss {
+  background: #9E1F1B;
+}
+
+.tie {
+  background: #e0e0e0;
+}
+
+/* TODO: Implement CSS rules. */
