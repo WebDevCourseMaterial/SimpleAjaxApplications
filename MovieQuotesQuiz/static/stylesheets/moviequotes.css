@@ -12,14 +12,10 @@ body {
   }
 }
 
-/* Minor <500px adjustment when buttons need 2 lines. */
-@media (max-width: 500px) {
-  .delete-movie-quote,
-  .edit-movie-quote {
-    margin: 2px 0;
-  }
-}
-
 th {
   font-size: 1.5em;
+}
+
+td.edit-actions {
+  width: 70px;
 }
